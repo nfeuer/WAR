@@ -7,10 +7,13 @@ var socketListener = theSocket.listen(theServer); // the socket has to listen to
 var port = process.env.PORT || 3000;
 theServer.listen(port); // the server has to listen to a port..
 
+app.use(express.static('public'));
 app.get("/", function(req, res) // we send them the index html file one theyre connected..
 {
-	//console.log("CONNECTED");
-	res.sendFile(__dirname+"/index.html");
+    // console.log(__dirname);
+    
+    // res.sendFile(__dirname+"/index.html");
+    
 });
 
 socketListener.sockets.on("connection", function(socket) // when user turns on a connection event..

@@ -6,16 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>WAR</title>
     <link rel="shortcut icon" href="#"/>
-    <script src="js/clmtrackr.js"></script>
+    <script src="clmtrackr.js"></script> 
 </head>
 
 <body>
-    <div id="container">
+    
         <video autoplay="true" id="videoElement">
          
         </video>
-    </div>
-
+    
+    <canvas id="drawCanvas" width="400" height="300"></canvas>
     <script>
             
              var videoElement = document.querySelector("#videoElement");
@@ -35,7 +35,29 @@
 
             var ctracker = new clm.tracker();
             ctracker.init();
-            ctracker.start(videoInput);
+            ctracker.start(videoElement);
+
+            function positionLoop() {
+                requestAnimationFrame(positionLoop);
+                var positions = ctracker.getCurrentPosition();
+                // positions = [[x_0, y_0], [x_1,y_1], ... ]
+                // do something with the positions ...
+            }
+            positionLoop();
+
+
          </script>
+    <script type="text/javascript">
+      var canvasInput = document.getElementById('drawCanvas');
+      var cc = canvasInput.getContext('2d');
+      function drawLoop() {
+        requestAnimationFrame(drawLoop);
+        cc.clearRect(0, 0, canvasInput.width, canvasInput.height);
+        ctracker.draw(canvasInput);
+      }
+      drawLoop();
+    </script>
+    
+    
 </body>
 </html>
