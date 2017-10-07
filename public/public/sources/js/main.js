@@ -25,8 +25,14 @@ navigator.mediaDevices.enumerateDevices()
 
 //audioSelect.onchange = getStream;
 videoSelect.onchange = getStream;
-
+var cam;
 function gotDevices(deviceInfos) {
+  console.log(deviceInfos);
+  deviceInfos = deviceInfos.filter((eachDeviceInfo) => {
+    return eachDeviceInfo.kind === "videoinput";
+  });
+  cam = deviceInfos[1];
+  console.log(deviceInfos);
   for (var i = 0; i !== deviceInfos.length; ++i) {
     var deviceInfo = deviceInfos[i];
     var option = document.createElement('option');
@@ -40,7 +46,7 @@ function gotDevices(deviceInfos) {
         (videoSelect.length + 1);
       videoSelect.appendChild(option);
     } else {
-      console.log('Found ome other kind of source/device: ', deviceInfo);
+     console.log('Found ome other kind of source/device: ', deviceInfo);
     }
   }
 }
@@ -56,16 +62,17 @@ function getStream() {
     
     video: {
       optional: [{
-        sourceId: videoSelect.value
+        sourceId: cam.deviceId
       }]
     }
   };
-
+  console.log("the value is "+videoSelect.value);
   navigator.mediaDevices.getUserMedia(constraints).
     then(gotStream).catch(handleError);
 }
 
 function gotStream(stream) {
+  console.log(stream);
   window.stream = stream; // make stream available to console
   videoElement.srcObject = stream;
 }
