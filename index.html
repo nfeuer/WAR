@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>WAR</title>
+    <link rel="shortcut icon" href="#"/>
     <script src="js/clmtrackr.js"></script>
 </head>
 
@@ -17,7 +18,7 @@
 
     <script>
             
-             var video = document.querySelector("#videoElement");
+             var videoElement = document.querySelector("#videoElement");
              navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
           
              if (navigator.getUserMedia) {       
@@ -25,12 +26,16 @@
              }
           
              function handleVideo(stream) {
-                 video.src = window.URL.createObjectURL(stream);
+                 videoElement.src = window.URL.createObjectURL(stream);
              }
           
              function videoError(e) {
                  // do something
              }
+
+            var ctracker = new clm.tracker();
+            ctracker.init();
+            ctracker.start(videoInput);
          </script>
 </body>
 </html>
