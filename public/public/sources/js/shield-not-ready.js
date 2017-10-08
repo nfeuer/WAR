@@ -75,6 +75,7 @@ function Particle() {
 function draw() {
    if (window.SiezeAttack === true || AnimationStop === true) {
      context.clearRect(0, 0, c.width, c.height, "#000");
+     frame = 0;
      return;
    }
 
