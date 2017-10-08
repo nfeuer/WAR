@@ -225,11 +225,11 @@ limitations under the License.
 
     function gumSuccess( stream ) {
       // add camera stream if getUserMedia succeeded
-      if ("srcObject" in vid) {
-        vid.srcObject = stream;
-      } else {
-        vid.src = (window.URL && window.URL.createObjectURL(stream));
-      }
+      // if ("srcObject" in vid) {
+      //   vid.srcObject = stream;
+      // } else {
+      //   vid.src = (window.URL && window.URL.createObjectURL(stream));
+      // }
       vid.onloadedmetadata = function() {
         adjustVideoProportions();
         vid.play();
@@ -257,9 +257,9 @@ limitations under the License.
 
     // set up video
     if (navigator.mediaDevices) {
-      //navigator.mediaDevices.getUserMedia({video : true}).then(gumSuccess).catch(gumFail);
+      navigator.mediaDevices.getUserMedia({video : true}).then(gumSuccess).catch(gumFail);
     } else if (navigator.getUserMedia) {
-      //navigator.getUserMedia({video : true}, gumSuccess, gumFail);
+      navigator.getUserMedia({video : true}, gumSuccess, gumFail);
     } else {
       insertAltVideo(vid);
       document.getElementById('gum').className = "hide";
