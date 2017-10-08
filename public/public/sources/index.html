@@ -190,6 +190,7 @@ limitations under the License.
     overlay.width = window.innerWidth;
     overlay.height = window.innerHeight;
     var overlayCC = overlay.getContext('2d');
+    var faceCenter = [0,0];
 
     /*********** Setup of video/webcam and checking for webGL support *********/
 
@@ -292,8 +293,13 @@ limitations under the License.
        overlayCC.clearRect(0, 0, vid_width, vid_height);
       //psrElement.innerHTML = "score :" + ctrack.getScore().toFixed(4);
       if (ctrack.getCurrentPosition()) {
+        faceCenter = ctrack.getCurrentPosition()[38];
         ctrack.draw(overlay);
       }
+    }
+
+    function targetFace() {
+      return faceCenter;
     }
 
     /*********** Code for stats **********/
