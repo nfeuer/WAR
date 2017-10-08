@@ -23,11 +23,13 @@ function SimpleAttackDrawCircle (charge) {
   AllAttackObjects = [];
 
   for (let x = 0; x < charge; x++) {
+    const target = targetFace();
+
     var AttackObj = {
       x: 0,
       y: 0,
-      xTo: canvas.width / 2,
-      yTo: canvas.height / 2,
+      xTo: (target) ? canvas.width - target.x : canvas.width / 2,
+      yTo: (target) ? target.y : canvas.height / 2,
       radius: randNumInRange(5, 35),
       speed: randNumInRange(5, 15),
       color: (function(){

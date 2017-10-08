@@ -303,7 +303,11 @@ limitations under the License.
     }
 
     function targetFace() {
-      return ctrack.getCurrentPosition();
+      const face = ctrack.getCurrentPosition();
+
+      if (face === false) return false;
+
+      return { x: face[38][0], y: face[38][1] };
     }
 
     /*********** Code for stats **********/
