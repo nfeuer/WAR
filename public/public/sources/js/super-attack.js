@@ -31,7 +31,7 @@ function Emitter() {
 }
 
 Emitter.prototype.reset = function () {
-    var PART_NUM = 500,
+    var PART_NUM = 50,
         x = (Math.random() * 400) - 200,
         y = (Math.random() * 400) - 200,
         z = (Math.random() * 800) - 200;
