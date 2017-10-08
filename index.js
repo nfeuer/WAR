@@ -90,12 +90,23 @@ function win(who) {
 	player2Health = 100;
 	player1Sheild = false;
 	player2Sheild = false;
+	console.log(who);
 	for(var i = who % 2; i < connectedPlayers.length; i += 2) {
 		connectedPlayers[i].emit('win');
-		if(who % 2 == 0 && i+1 < connectedPlayers.length) {
-			connectedPlayers[i+1].emit('end', {all:connectedPlayers.length});
-		} else if(who % 2 == 1 && i-1 != -1) {
-			connectedPlayers[i-1].emit('end', {all:connectedPlayers.length});
+		// if(who % 2 == 0 && i+1 < connectedPlayers.length) {
+		// 	connectedPlayers[i+1].emit('end', {all:connectedPlayers.length});
+		// } else if(who % 2 == 1 && i-1 != -1) {
+		// 	connectedPlayers[i-1].emit('end', {all:connectedPlayers.length});
+		// }
+
+		if(who % 2 == 0) {
+			if (i+1 < connectedPlayers.length) {
+				connectedPlayers[i+1].emit('end', {all:connectedPlayers.length});
+			}
+		} else {
+			if (i-1 > -1) {
+				connectedPlayers[i-1].emit('end', {all:connectedPlayers.length});
+			}
 		}
 	}
 	
