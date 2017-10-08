@@ -86,7 +86,7 @@ function win(who) {
 	player1Sheild = false;
 	player2Sheild = false;
 	connectedPlayers[who].emit('win');
-	connectedPlayers[who].emit('end', {all:connectedPlayers.length});
+	connectedPlayers[who].broadcast('end', {all:connectedPlayers.length});
 	game = true;
 }
 
