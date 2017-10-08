@@ -21,6 +21,7 @@ var player2Health = 100;
 var player1Sheild = false;
 var player2Sheild = false;
 var connectedPlayers = [];
+var game = true;
 
 function executeAction(spell,playerId) {
 	var player = connectedPlayers.indexOf(playerId);
@@ -73,7 +74,8 @@ function executeAction(spell,playerId) {
 }
 
 function checkHealth(health, player) {
-	if(health <= 0) {
+	if(health <= 0 && game) {
+		game = false;
 		win(player);
 	}
 }
@@ -85,7 +87,7 @@ function win(who) {
 	player2Sheild = false;
 	connectedPlayers[who].emit('win');
 	connectedPlayers[who].emit('end', {all:connectedPlayers.length});
-
+	game = true;
 }
 
 socketListener.sockets.on('connection', function(socket) 
