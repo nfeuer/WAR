@@ -1,13 +1,16 @@
 ((PatternLock) => {
 	document.addEventListener('DOMContentLoaded', () => {
 		const cnvs = document.getElementById('animation-canvas');
-		cnvs.width = window.innerWidth / 2;
+		cnvs.width = (window.innerWidth < 768) ? window.innerWidth : window.innerWidth / 2;
 		cnvs.height = window.innerHeight / 2;
 
 		const patternLock = new PatternLock({
 			el: '#spell-grid',
 			dimens: { width: cnvs.width, height: cnvs.height },
 		});
+
+		window.lockGrid = patternLock;
+		window.lockCanvas = document.getElementById('spell-grid').getContext('2d');
 
     const The_Spells = {
        'shield': ['1243', '2134', '3124', '4213', '1342', '2431'],
@@ -42,7 +45,7 @@
 		patternLock.setTheme({
 			accent: '#1abc9c',
          primary: '#000',
-         bg: 'rgba(255,255,255,0.3)',
+         bg: 'rgba(255,255,255,0)',
 			dimens: {
 				node_radius: 40,
 			}
@@ -53,7 +56,6 @@
 		patternLock.start();
 
 		patternLock.onPatternComplete = nodes => {
-			document.getElementById('spell-grid').click();
 			const spell = patternToSequence(nodes);
 
 			for (let spellName in The_Spells) {

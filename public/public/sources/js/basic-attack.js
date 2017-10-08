@@ -20,6 +20,8 @@ function SimpleAttackDrawCircle (charge) {
       coordVal = 0,
       randCoordVal = 0;
 
+  AllAttackObjects = [];
+
   for (let x = 0; x < charge; x++) {
     var AttackObj = {
       x: 0,
@@ -67,14 +69,22 @@ function SimpleAttackDrawCircle (charge) {
     AllAttackObjects.push(AttackObj);
   }
 
+  window.objs = AllAttackObjects;
+
   SimpleAttackMoveCircle();
 };
 
 function SimpleAttackMoveCircle () {
-  context.clearRect(0, 0, canvas.width, canvas.width);
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  if (AllAttackObjects.length < 1) return;
 
-  AllAttackObjects.forEach(function (circle, index) {
-    if (Math.abs(circle.xTo - circle.x) <= 10 && Math.abs(circle.yTo - circle.y) <= 10) { AllAttackObjects.splice(index, 1); return; }
+  for (var x = 0; x < AllAttackObjects.length; x++) {
+    let circle = AllAttackObjects[x];
+
+    if (Math.abs(circle.xTo - circle.x) <= 10 && Math.abs(circle.yTo - circle.y) <= 10) {
+      AllAttackObjects.splice(x, 1);
+      continue;
+    }
 
     var tx = circle.xTo - circle.x,
         ty = circle.yTo - circle.y,
@@ -89,11 +99,11 @@ function SimpleAttackMoveCircle () {
     circle.y += velY;
 
     context.beginPath();
-    context.arc(circle.x, circle.y, circle.radius*coef, 0, Math.PI*2);
+    context.arc(circle.x, circle.y, circle.radius, 0, Math.PI*2);
     context.fillStyle = circle.color;
     context.fill();
-  })
+  }
 
-  // setTimeout(function () { SimpleAttackMoveCircle(circle) }, 10);
+  // setTimeout(SimpleAttackMoveCircle, 10);
   requestAnimationFrame(SimpleAttackMoveCircle);
 };

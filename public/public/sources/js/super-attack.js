@@ -159,7 +159,7 @@ Particle.prototype.update = function () {
     if (this.z > -focalLength) {
         var scale = focalLength / (focalLength + this.z);
 
-        this.size = scale * 4;
+        this.size = scale * 2;
         this.xPos = vanishPointX + this.x * scale;
         this.yPos = vanishPointY + this.y * scale;
         this.render = true;
@@ -167,7 +167,7 @@ Particle.prototype.update = function () {
 };
 
 function superAttackAnimation() {
-    if (AnimationStop === true) {
+    if (window.SiezeAttack === true || AnimationStop === true) {
       ctx.clearRect(0, 0, canvas.width, canvas.height, "#000");
       return;
     }
