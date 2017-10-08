@@ -57,6 +57,16 @@ limitations under the License.
         height: 100%;
         z-index: 1;
      }
+     #container > videoel {
+				-o-transform : scaleX(-1);
+				-webkit-transform : scaleX(-1);
+				transform : scaleX(-1);
+				-ms-filter : fliph; /*IE*/
+				filter : fliph; /*IE*/
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+			}
      #container > #spell-grid {
         z-index: 2;
         height: 50%;
@@ -109,16 +119,7 @@ limitations under the License.
 				filter : fliph; /*IE*/
 			}
 
-			#videoel {
-				-o-transform : scaleX(-1);
-				-webkit-transform : scaleX(-1);
-				transform : scaleX(-1);
-				-ms-filter : fliph; /*IE*/
-				filter : fliph; /*IE*/
-        z-index: -1;
-        width: 100%;
-        height: 100%;
-			}
+			
 
 			/* #container {
         position : relative;
