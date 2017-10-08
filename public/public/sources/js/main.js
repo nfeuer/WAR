@@ -24,7 +24,7 @@ navigator.mediaDevices.enumerateDevices()
   .then(gotDevices).then(getStream).catch(handleError);
 
 //audioSelect.onchange = getStream;
-videoSelect.onchange = getStream;
+//videoSelect.onchange = getStream;
 var cam;
 function gotDevices(deviceInfos) {
   console.log(deviceInfos);
