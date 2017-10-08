@@ -2,7 +2,14 @@
   var socket = io.connect(window.location.origin);
   
   socket.on('win', function() {
-    console.log('win');
+    var WinMessage = document.createElement('div');
+    WinMessage.innerHTML = "You WIN!";
+    WinMessage.className = "rollOut";
+    document.body.appendChild(WinMessage);
+
+    setInterval(function () {
+      WinMessage.parentNode.removeChild(WinMessage);
+    }, 1500);
   });
   
   var Sounds = {
