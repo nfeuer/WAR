@@ -121,7 +121,7 @@
       if (The_Spells[spellName].includes(spell)) {
         Canvases.controller.canvas.style.display = "none";
 
-        socket.emit('action', {spell: spellName});
+        if ( targetFace() ) socket.emit('action', {spell: spellName});
         Sounds[spellName].play();
 
         switch (spellName) {
