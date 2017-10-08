@@ -25,6 +25,11 @@ var game = true;
 
 function executeAction(spell,playerId) {
 	var player = connectedPlayers.indexOf(playerId);
+	if(!player) {
+		console.log("player broke");
+		console.log(player);
+		return;
+	}
 	
 	switch(spell) {
 		case 'sheild':
@@ -92,7 +97,6 @@ function win(who) {
 		} else if(who % 2 == 1 && i-1 != -1) {
 			connectedPlayers[i-1].emit('end', {all:connectedPlayers.length});
 		}
-		
 	}
 	
 	
@@ -101,6 +105,8 @@ function win(who) {
 
 socketListener.sockets.on('connection', function(socket) 
 {
+	console.log("Connection");
+	console.log("Players: " + connectedPlayers.length);
 	connectedPlayers.push(socket);
 
 	socket.on('action', function(data) 
@@ -111,7 +117,8 @@ socketListener.sockets.on('connection', function(socket)
 	socket.on('disconnect', function() {
 		var i = connectedPlayers.indexOf(socket);
 		connectedPlayers.splice(i,1);
-		console.log(connectedPlayers);
+		console.log("disconnected");
+		console.log(connectedPlayers.length);
 		//socket.broadcast('end');
 	});
 });
