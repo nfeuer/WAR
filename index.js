@@ -87,10 +87,10 @@ function win(who) {
 	player2Sheild = false;
 	for(var i = who % 2; i < connectedPlayers.length; i += 2) {
 		connectedPlayers[i].emit('win');
-		if(who % 2 == 0 && i+1 <= connectedPlayers.length) {
-			connectedPlayers[i+1].broadcast('end', {all:connectedPlayers.length});
+		if(who % 2 == 0 && i+1 < connectedPlayers.length) {
+			connectedPlayers[i+1].emit('end', {all:connectedPlayers.length});
 		} else if(who % 2 == 1 && i-1 != -1) {
-			connectedPlayers[i-1].broadcast('end', {all:connectedPlayers.length});
+			connectedPlayers[i-1].emit('end', {all:connectedPlayers.length});
 		}
 		
 	}
