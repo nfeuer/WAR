@@ -28,14 +28,14 @@ function executeAction(spell,playerId) {
 	
 	switch(spell) {
 		case 'sheild':
-			if(player == 0) {
+			if(player % 2 == 0) {
 				player1Sheild = true;
 			} else {
 				player2Sheild = true;
 			}
 		break;
 		case 'basic attack':
-			if(player == 0) {
+			if(player % 2 == 0) {
 				if(!player2Sheild) {
 					player2Health -= 30;
 					checkHealth(player2Health,0);
@@ -52,7 +52,7 @@ function executeAction(spell,playerId) {
 			}
 		break;
 		case 'super attack':
-			if(player == 0) {
+			if(player % 2 == 0) {
 				if(!player2Sheild) {
 					player2Health -= 50;
 					checkHealth(player2Health,0);
@@ -74,8 +74,8 @@ function executeAction(spell,playerId) {
 }
 
 function checkHealth(health, player) {
-	if(health <= 0 && game) {
-		game = false;
+	if(health <= 0) {
+		//game = false;
 		win(player);
 	}
 }
@@ -85,9 +85,18 @@ function win(who) {
 	player2Health = 100;
 	player1Sheild = false;
 	player2Sheild = false;
-	connectedPlayers[who].emit('win');
-	connectedPlayers[who].broadcast('end', {all:connectedPlayers.length});
-	game = true;
+	for(var i = who % 2; i < connectedPlayers.length; i += 2) {
+		connectedPlayers[i].emit('win');
+		if(who % 2 == 0 && i+1 <= connectedPlayers.length) {
+			connectedPlayers[i+1].broadcast('end', {all:connectedPlayers.length});
+		} else if(who % 2 == 1 && i-1 != -1) {
+			connectedPlayers[i-1].broadcast('end', {all:connectedPlayers.length});
+		}
+		
+	}
+	
+	
+	//game = true;
 }
 
 socketListener.sockets.on('connection', function(socket) 
