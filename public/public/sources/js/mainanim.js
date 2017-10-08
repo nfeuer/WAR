@@ -1,16 +1,13 @@
 ((PatternLock) => {document.addEventListener('DOMContentLoaded', () => {
   var socket = io.connect(window.location.origin);
+  var WinMessage = document.getElementById('win-message-container');
   
   socket.on('win', function() {
-    alert("You Won");
+    console.log("You won");
+    WinMessage.className = "jackInTheBox";
 
-    var WinMessage = document.createElement('div');
-    WinMessage.innerHTML = "You WIN!";
-    WinMessage.className = "rollOut";
-    document.body.appendChild(WinMessage);
-
-    setInterval(function () {
-      WinMessage.parentNode.removeChild(WinMessage);
+    setTimeout(function () {
+      WinMessage.className = "rollOut";
     }, 1500);
   });
 

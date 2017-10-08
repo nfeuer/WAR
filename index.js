@@ -84,21 +84,23 @@ function win(who) {
 	player1Sheild = false;
 	player2Sheild = false;
 	connectedPlayers[who].emit('win');
-	socketListener.broadcast('end', {all:connectedPlayers.length});
+	connectedPlayers[who].emit('end', {all:connectedPlayers.length});
+
 }
 
-socketListener.sockets.on("connection", function(socket) 
+socketListener.sockets.on('connection', function(socket) 
 {
 	connectedPlayers.push(socket);
 
-	socket.on("action", function(data) 
+	socket.on('action', function(data) 
 	{
 		executeAction(data.spell,socket);
 	});
 
-	socket.on("disconnect", function() {
+	socket.on('disconnect', function() {
 		var i = connectedPlayers.indexOf(socket);
-		connectedPlayers.splice(i,0);
+		connectedPlayers.splice(i,1);
 		console.log(connectedPlayers);
+		//socket.broadcast('end');
 	});
 });
