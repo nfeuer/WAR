@@ -1,4 +1,8 @@
 ((PatternLock) => {document.addEventListener('DOMContentLoaded', () => {
+  var socket = io.connect(window.location.origin);
+  socket.on('win', function() {
+    console.log('win');
+  }); 
   const AnimationCanvas = document.getElementById('animation-canvas');
   const AnimationCanvasContext = AnimationCanvas.getContext('2d');
 
@@ -23,7 +27,7 @@
   });
   SpellPatternController.setTheme({
     accent: '#1abc9c',
-    primary: '#000',
+    primary: '#0091ea',
     bg: 'rgba(255,255,255,0)',
     dimens: {
       node_radius: 40,
@@ -87,6 +91,8 @@
     for (let spellName in The_Spells) {
       if (The_Spells[spellName].includes(spell)) {
         Canvases.controller.canvas.style.display = "none";
+
+        socket.emit('action', {spell: spellName});
 
         switch (spellName) {
           case 'shield':

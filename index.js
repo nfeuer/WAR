@@ -16,11 +16,88 @@ app.get("/", function(req, res) // we send them the index html file one theyre c
     
 });
 
-socketListener.sockets.on("connection", function(socket) // when user turns on a connection event..
+var player1Health = 100;
+var player2Health = 100;
+var player1Sheild = false;
+var player2Sheild = false;
+var connectedPlayers = [];
+
+function executeAction(spell,playerId) {
+	var player = connectedPlayers.indexOf(playerId);
+	
+	switch(spell) {
+		case 'sheild':
+			if(player == 0) {
+				player1Sheild = true;
+			} else {
+				player2Sheild = true;
+			}
+		break;
+		case 'basic attack':
+			if(player == 0) {
+				if(!player2Sheild) {
+					player2Health -= 30;
+					checkHealth(player2Health,0);
+				} else {
+					player2Sheild = !player2Sheild;
+				}
+			} else {
+				if(!player1Sheild) {
+					player1Health -= 30;
+					checkHealth(player1Health,1);
+				} else {
+					player1Sheild = !player1Sheild;
+				}
+			}
+		break;
+		case 'super attack':
+			if(player == 0) {
+				if(!player2Sheild) {
+					player2Health -= 50;
+					checkHealth(player2Health,0);
+				} else {
+					player2Sheild = !player2Sheild;
+				}
+			} else {
+				if(!player1Sheild) {
+					player1Health -= 50;
+					checkHealth(player1Health,1);
+				} else {
+					player1Sheild = !player1Sheild;
+				}
+			}
+		break;	
+		default :
+		break;
+	}
+}
+
+function checkHealth(health, player) {
+	if(health <= 0) {
+		win(player);
+	}
+}
+
+function win(who) {
+	player1Health = 100;
+	player2Health = 100;
+	player1Sheild = false;
+	player2Sheild = false;
+	connectedPlayers[who].emit('win');
+}
+
+socketListener.sockets.on("connection", function(socket) 
 {
-	socket.on("usersMessage", function(data) // first param is name of event, second event is what to execute for the event.
+	connectedPlayers.push(socket);
+
+	socket.on("action", function(data) 
 	{
-		//console.log("the data sent to the server is "+data);
-		socketListener.sockets.emit("thisUsersMessage", data); //  create a new event called thisUsersMessage and emit the data so everyone can see it..
+		executeAction(data.spell,socket);
+	});
+
+	socket.on("disconnected", function() {
+		var i = connectedPlayers.indexOf(socket);
+		connectedPlayers.splice(i,0);
+		console.log(connectedPlayers);
 	});
 });
