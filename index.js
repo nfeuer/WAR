@@ -84,6 +84,7 @@ function win(who) {
 	player1Sheild = false;
 	player2Sheild = false;
 	connectedPlayers[who].emit('win');
+	socketListener.broadcast('end', {all:connectedPlayers.length});
 }
 
 socketListener.sockets.on("connection", function(socket) 

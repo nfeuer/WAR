@@ -2,6 +2,8 @@
   var socket = io.connect(window.location.origin);
   
   socket.on('win', function() {
+    alert("You Won");
+
     var WinMessage = document.createElement('div');
     WinMessage.innerHTML = "You WIN!";
     WinMessage.className = "rollOut";
@@ -10,6 +12,10 @@
     setInterval(function () {
       WinMessage.parentNode.removeChild(WinMessage);
     }, 1500);
+  });
+
+  socket.on('end', function(data) {
+    alert('game end. Players: ' + data.all);
   });
   
   var Sounds = {
