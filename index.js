@@ -95,7 +95,7 @@ socketListener.sockets.on("connection", function(socket)
 		executeAction(data.spell,socket);
 	});
 
-	socket.on("disconnected", function() {
+	socket.on("disconnect", function() {
 		var i = connectedPlayers.indexOf(socket);
 		connectedPlayers.splice(i,0);
 		console.log(connectedPlayers);

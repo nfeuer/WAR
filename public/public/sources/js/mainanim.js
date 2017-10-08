@@ -1,8 +1,37 @@
 ((PatternLock) => {document.addEventListener('DOMContentLoaded', () => {
   var socket = io.connect(window.location.origin);
+  
   socket.on('win', function() {
     console.log('win');
-  }); 
+  });
+  
+  var Sounds = {
+    "basic attack": document.createElement("audio"),
+    "super attack": document.createElement("audio"),
+    "shield": document.createElement("audio"),
+  };
+  for(let key in Sounds) {
+    let source = "../audiosrc/";
+    if(key === "basic attack"){
+      source+= "basicAttack.mp3";
+    }
+    else if(key === "super attack"){
+      source += "superAttack.mp3";
+    }
+    else{source += "shield.mp3";}
+    Sounds[key].src = source;
+    Sounds[key].setAttribute("preload", "auto");
+    Sounds[key].setAttribute("controls", "none");
+    Sounds[key].style.display = "none";
+    document.body.appendChild(Sounds[key]);
+    Sounds[key].playSound = function(){
+        Sounds[key].play();
+    }
+    Sounds[key].stop = function(){
+        Sounds[key].pause();
+    }
+  }
+
   const AnimationCanvas = document.getElementById('animation-canvas');
   const AnimationCanvasContext = AnimationCanvas.getContext('2d');
 
@@ -93,6 +122,7 @@
         Canvases.controller.canvas.style.display = "none";
 
         socket.emit('action', {spell: spellName});
+        Sounds[spellName].play();
 
         switch (spellName) {
           case 'shield':
