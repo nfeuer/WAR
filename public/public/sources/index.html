@@ -123,8 +123,9 @@ limitations under the License.
 			/* #container {
         position : relative;
         width:100%;
-				/*margin : 0px auto;*/
+				margin : 0px auto;
 			} */
+      
 
 			#content {
 				margin-top : 70px;
@@ -258,9 +259,9 @@ limitations under the License.
 
     // set up video
     if (navigator.mediaDevices) {
-      navigator.mediaDevices.getUserMedia({video : true}).then(gumSuccess).catch(gumFail);
+      //navigator.mediaDevices.getUserMedia({video : true}).then(gumSuccess).catch(gumFail);
     } else if (navigator.getUserMedia) {
-      navigator.getUserMedia({video : true}, gumSuccess, gumFail);
+      //navigator.getUserMedia({video : true}, gumSuccess, gumFail);
     } else {
       insertAltVideo(vid);
       document.getElementById('gum').className = "hide";
