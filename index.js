@@ -25,7 +25,7 @@ var game = true;
 
 function executeAction(spell,playerId) {
 	var player = connectedPlayers.indexOf(playerId);
-	if(!player) {
+	if(player == null) {
 		console.log("player broke");
 		console.log(player);
 		return;
@@ -106,12 +106,14 @@ function win(who) {
 socketListener.sockets.on('connection', function(socket) 
 {
 	console.log("Connection");
-	console.log("Players: " + connectedPlayers.length);
+	
 	connectedPlayers.push(socket);
-
+	console.log("Players: " + connectedPlayers.length);
 	socket.on('action', function(data) 
 	{
+		console.log("hi");
 		executeAction(data.spell,socket);
+		console.log(connectedPlayers.indexOf(socket));
 	});
 
 	socket.on('disconnect', function() {
