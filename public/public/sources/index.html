@@ -35,13 +35,58 @@ limitations under the License.
 <script src="Stats.js"></script>
 <script src="utils.js"></script>
 <link rel="stylesheet" href="../../css/main.css" />
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+  }
 
+  #container {
+     position: relative;
+     display: block;
+     flex: 100%;
+     width: 100vw;
+     height: 100vh;
+     margin: auto;
+  }
+     #container > canvas {
+        position: absolute;
+        display: block;
+        margin: auto;
+        width: 100%;
+        height: 100%;
+     }
+     #container > #spell-grid {
+        z-index: 2;
+        height: 50%;
+        width: 50%;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 0);
+     }
+     #container > #animation-canvas {
+        z-index: 1;
+        top: 0;
+        left: 0;
+     }
+</style>
   <style>
   div.select {
     margin: 0 0 1em 0;
     display: none;
   }
   </style>
+  <script type="text/javascript">
+		var AnimationStop = false;				// This is the trigger/stopper flag for the attacking/defending animations
+		var AttackInterval = 3000;
+
+		let randNumInRange = (min, max) => {
+			min = (typeof min === "number") ? min : 0;
+			max = (typeof max === "number") ? max : 100;
+
+			return ~~(Math.random() * (max - min + 1)) + min;
+		};
+	</script>
   <style>
 			@import url(https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700);
 
@@ -69,13 +114,16 @@ limitations under the License.
 				transform : scaleX(-1);
 				-ms-filter : fliph; /*IE*/
 				filter : fliph; /*IE*/
+        z-index: 0;
+        width: 100%;
+        height: 100%;
 			}
 
-			#container {
+			/* #container {
         position : relative;
         width:100%;
 				/*margin : 0px auto;*/
-			}
+			} */
 
 			#content {
 				margin-top : 70px;
@@ -121,8 +169,9 @@ limitations under the License.
   </div>
   <canvas id="overlay"></canvas>
   
-  <video id="videoel" width="100%" height="100%" muted autoplay></video>
-
+  <video id="videoel" width="100%" height="100%" muted></video>
+  <canvas id="animation-canvas" width="100" height="100"></canvas>
+  <canvas id="spell-grid" width="100" height="100"></canvas>
   <script src="js/main.js"></script>  
 
 
@@ -238,7 +287,6 @@ limitations under the License.
        overlayCC.clearRect(0, 0, vid_width, vid_height);
       //psrElement.innerHTML = "score :" + ctrack.getScore().toFixed(4);
       if (ctrack.getCurrentPosition()) {
-        console.log(ctrack.getCurrentPosition());
         ctrack.draw(overlay);
       }
     }
@@ -256,5 +304,10 @@ limitations under the License.
     }, false);
 
   </script>
+  <script src='./js/PatternLock.js'></script>
+	<script src='./js/script.js'></script>
+	<script src='./js/shield-not-ready.js'></script>
+	<script src='./js/super-attack.js'></script>
+	<script src='./js/basic-attack.js'></script>
 </body>
 </html>
